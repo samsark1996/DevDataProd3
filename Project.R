@@ -18,52 +18,42 @@ mtcars$vs = factor(mtcars$vs)
 levels(mtcars$vs) = c("V-shaped","straight")
 
 
-df_sum = mtcars %>%
-  group_by(am,vs) %>%
-  summarise(Mean = mean(mpg),
-            SD = sd(mpg),
-            Minimum = min(mpg),
-            
-            Maximum = max(mpg)) %>%
-  data.frame()
-print(df_sum)
+# df_sum = mtcars %>%
+#   group_by(am,vs) %>%
+#   summarise(Mean = mean(mpg),
+#             SD = sd(mpg),
+#             Minimum = min(mpg),
+#             
+#             Maximum = max(mpg)) %>%
+#   data.frame()
+# print(df_sum)
+# 
+# 
+# ggpairs(mtcars[,-c(1,8,9)])
+# 
+# f1 = ggplot(data = mtcars,aes(x = am,y = mpg,fill = am)) +
+#   geom_boxplot()  +
+#   scale_fill_brewer(palette="Dark2") +
+#   theme_classic()
+# 
+# f2 = ggplot(data = mtcars,aes(x = vs,y = mpg,fill = vs)) +
+#   geom_boxplot()  +
+#   scale_fill_brewer(palette="Dark2") +
+#   theme_classic()
+# 
+# grid.arrange(f1,f2,nrow = 1)
+# 
+# p1 = ggplot(data = mtcars) +
+#   geom_boxplot(aes(x=am,y=mpg,fill = am)) +
+#   geom_jitter(aes(x=am,y=mpg),position=position_jitter(0.05)) + 
+#   facet_wrap(~vs,nrow = 1) + xlab("Transmission") + ylab("Miles/(US) gallon")
+# print(p1)
+# 
+# lm_man = lm(mpg~., data = mtcars[mtcars$am=="manual",-9])
+# summary(lm_man)
+# lm_auto = lm(mpg~., data = mtcars[mtcars$am=="automatic",-9])
+# summary(lm_auto)
 
-# pairs(mtcars[,-c(1,8,9)],
-#       col = c("red", "cornflowerblue"),   # Change color by group
-#       pch = c(8, 18))
-
-ggpairs(mtcars[,-c(1,8,9)])
-
-f1 = ggplot(data = mtcars,aes(x = am,y = mpg,fill = am)) +
-  geom_boxplot()  +
-  scale_fill_brewer(palette="Dark2") +
-  theme_classic()
-
-f2 = ggplot(data = mtcars,aes(x = vs,y = mpg,fill = vs)) +
-  geom_boxplot()  +
-  scale_fill_brewer(palette="Dark2") +
-  theme_classic()
-
-grid.arrange(f1,f2,nrow = 1)
-
-p1 = ggplot(data = mtcars) +
-  geom_boxplot(aes(x=am,y=mpg,fill = am)) +
-  geom_jitter(aes(x=am,y=mpg),position=position_jitter(0.05)) + 
-  facet_wrap(~vs,nrow = 1) + xlab("Transmission") + ylab("Miles/(US) gallon")
-print(p1)
-
-lm_man = lm(mpg~., data = mtcars[mtcars$am=="manual",-9])
-summary(lm_man)
-lm_auto = lm(mpg~., data = mtcars[mtcars$am=="automatic",-9])
-summary(lm_auto)
-
-# lmp = function (modelobject) {
-#   if (class(modelobject) != "lm") stop("Not an object of class 'lm' ")
-#   f = summary(modelobject)$fstatistic
-#   p = pf(f[1],f[2],f[3],lower.tail=F)
-#   attributes(p) = NULL
-#   return(p)
-# }
 
 var_list = colnames(mtcars)[-1]
 
@@ -83,10 +73,17 @@ Residual_Sum_of_Squares = results$rss
 Cp = results$cp
 BIC = results$bic
 
-
-
 Final_Summary = data.frame(No_of_Variables,Models,R_squared,Adjusted_R_squared,
                            Residual_Sum_of_Squares,Cp,BIC)
+blm = Final_Summary$Models[Final_Summary$Adjusted_R_squared == max(Final_Summary$Adjusted_R_squared)]
+
+
+blm_fit = lm(formula = as.formula(blm),data = mtcars)
+
+summary(blm_fit)
+
+
+
 
 f3 = ggplot(data = Final_Summary,aes(x = 1:10,y = Adjusted_R_squared)) + 
   geom_line() + 
