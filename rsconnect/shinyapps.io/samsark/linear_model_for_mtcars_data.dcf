@@ -5,7 +5,10 @@ account: samsark
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4096214
-bundleId: 4570913
+bundleId: 4573250
 url: https://samsark.shinyapps.io/linear_model_for_mtcars_data/
-when: 1620406317.97036
-lastSyncTime: 1620406317.97036
+when: 1620454679.37672
+lastSyncTime: 1620454679.37672
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: dump/server.R|dump/ui.R

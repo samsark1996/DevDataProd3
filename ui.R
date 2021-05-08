@@ -1,6 +1,10 @@
 library(shiny)
 library(shinyjs)
-library(rsconnect)
+library(leaps)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(grid)
 
 rsconnect::setAccountInfo(name='samsark', token='1EECA09290CF73AD9E00D3F17A2DA468', secret='KTxHBvwB4xY2InYkyn27MoXhn2gpRG1YJZ0b7LZf')
 
@@ -68,4 +72,4 @@ shinyUI(fluidPage(
         )
     )
 ))
-deployApp()
+# deployApp()

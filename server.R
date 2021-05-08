@@ -2,6 +2,9 @@ library(shiny)
 library(shinyjs)
 library(leaps)
 library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(grid)
 
 
 # Preparing the data
